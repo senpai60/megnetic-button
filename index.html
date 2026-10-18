@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Day 07 — Magnetic Button & Apple-Style Social Card Showcase</title>
+
+  <!-- =========================================================================
+       TYPOGRAPHY: Google Fonts (Inter)
+       Acts as a clean, crisp fallback for Apple SF Pro Display across all platforms
+       ========================================================================= -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Core Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- =========================================================================
+       1. AMBIENT DREAMY BACKGROUND
+       High-blur portrait layer + radial vignette overlay for cinematic depth
+       ========================================================================= -->
+  <div class="backdrop" aria-hidden="true"></div>
+  <div class="backdrop-overlay" aria-hidden="true"></div>
+
+  <!-- =========================================================================
+       2. MAIN SHOWCASE CONTAINER
+       Centers the card in the viewport
+       ========================================================================= -->
+  <main class="showcase-container">
+
+    <!-- Clean Minimalist Social Media Card (Apple Design Aesthetics) -->
+    <div class="social-card">
+
+      <!-- Background Portrait Photo -->
+      <img src="download (2).png" alt="Card Portrait" class="card-image">
+
+      <!-- -------------------------------------------------------------------
+           CARD TOP BAR: Floating Frosted Status Pill & Story Indicator
+           ------------------------------------------------------------------- -->
+      <div class="card-top">
+        <!-- Frosted Glass Pill with Glassmorphism Blur -->
+        <div class="status-pill">
+          <!-- Official Apple 3D Red Heart Emoji Asset -->
+          <img class="emoji" src="https://cdn.jsdelivr.net/npm/emoji-datasource-apple@15.1.2/img/apple/64/2764-fe0f.png" alt="❤️">
+          <span>Aesthetic</span>
+        </div>
+
+        <!-- Vertical Story/Profile Indicator Bar -->
+        <div class="card-indicator" aria-hidden="true">
+          <div class="indicator-thumb"></div>
+        </div>
+      </div>
+
+      <!-- -------------------------------------------------------------------
+           CARD BOTTOM OVERLAY: Profile Metadata & Magnetic Button
+           ------------------------------------------------------------------- -->
+      <div class="card-bottom">
+
+        <!-- 1. Location Metadata Tag -->
+        <div class="location-tag">
+          <svg class="location-pin" width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+          </svg>
+          <span>Somewhere in India</span>
+        </div>
+
+        <!-- 2. Username & Verified Badge -->
+        <div class="name-row">
+          <h2 class="user-name">m.shhhh</h2>
+          <!-- Official Style Cyan Verified Badge -->
+          <svg class="verified-icon" width="19" height="19" viewBox="0 0 24 24" fill="none" aria-label="Verified">
+            <circle cx="12" cy="12" r="10" fill="#38BDF8"/>
+            <path d="M8.5 12.5L10.8 14.8L15.5 9.8" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+
+        <!-- 3. Glassmorphism Interest Chips with Apple Emojis -->
+        <div class="tags-row">
+          <!-- Valorant Gaming Chip -->
+          <span class="chip">
+            <img class="emoji" src="https://cdn.jsdelivr.net/npm/emoji-datasource-apple@15.1.2/img/apple/64/1f3ae.png" alt="🎮">
+            Valorant
+          </span>
+
+          <!-- Netflix Chip -->
+          <span class="chip">
+            <img class="emoji" src="https://cdn.jsdelivr.net/npm/emoji-datasource-apple@15.1.2/img/apple/64/1f37f.png" alt="🍿">
+            Netflix
+          </span>
+
+          <!-- Counter Chip -->
+          <span class="chip chip-more">+18</span>
+        </div>
+
+        <!-- 4. THE STAR ELEMENT: Magnetic Follow Button
+             - Controlled via script.js for magnetic tracking & spring snapback
+             - GPU Accelerated via 'will-change: transform' in style.css -->
+        <button class="magnetic-btn follow-btn" id="followBtn" aria-label="Follow user">
+          <span class="btn-text">Follow</span>
+          <!-- Dynamic Plus / Checkmark Icon -->
+          <svg class="btn-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="12" y1="5" x2="12" y2="19"></line>
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+          </svg>
+        </button>
+
+      </div>
+    </div>
+  </main>
+
+  <!-- =========================================================================
+       SCRIPTS: GreenSock Animation Platform (GSAP 3) + Custom Magnetic Logic
+       ========================================================================= -->
+  <!-- GSAP CDN for ultra-smooth easing and spring physics -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <!-- Main Magnetic Button Logic -->
+  <script src="script.js"></script>
+
+</body>
+</html>

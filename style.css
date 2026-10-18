@@ -1,0 +1,340 @@
+/* ==============================================================================
+   DAY 07: SOCIAL MEDIA CARD WITH MAGNETIC BUTTON SHOWCASE
+   ==============================================================================
+   Design System:
+   - Aesthetic: Minimalist Apple Design Language / Glassmorphism
+   - Typography: Local SF Pro Display with Inter Google Fonts Fallback
+   - Performance: GPU-Accelerated Animations ('will-change: transform')
+   ============================================================================== */
+
+/* ------------------------------------------------------------------------------
+   1. GLOBAL RESET & BOX SIZING
+   ------------------------------------------------------------------------------ */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* ------------------------------------------------------------------------------
+   2. TYPOGRAPHY: SF PRO WITH INTER FALLBACK
+   Targets native Apple San Francisco fonts when available, falls back to Inter
+   ------------------------------------------------------------------------------ */
+@font-face {
+  font-family: 'SF Pro Display';
+  src: local('SF Pro Display'), local('SFProDisplay-Regular'), local('SF-Pro-Display-Regular');
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: 'SF Pro Display';
+  src: local('SF Pro Display Medium'), local('SFProDisplay-Medium'), local('SF-Pro-Display-Medium');
+  font-weight: 500;
+}
+
+@font-face {
+  font-family: 'SF Pro Display';
+  src: local('SF Pro Display Semibold'), local('SFProDisplay-Semibold'), local('SF-Pro-Display-Semibold');
+  font-weight: 600;
+}
+
+@font-face {
+  font-family: 'SF Pro Display';
+  src: local('SF Pro Display Bold'), local('SFProDisplay-Bold'), local('SF-Pro-Display-Bold');
+  font-weight: 700;
+}
+
+/* ------------------------------------------------------------------------------
+   3. BODY & OVERALL PAGE LAYOUT
+   Centers the social card perfectly on screen with subpixel antialiasing
+   ------------------------------------------------------------------------------ */
+body {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #07090d;
+  font-family: "SF Pro Display", "SF Pro Text", "SF Pro", -apple-system, BlinkMacSystemFont, "Inter", sans-serif;
+  overflow: hidden;
+  position: relative;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ------------------------------------------------------------------------------
+   4. AMBIENT DREAMY BLURRED BACKDROP
+   Uses background-image with high blur (50px) and scale (1.12) to create
+   a rich cinematic mood behind the floating card.
+   ------------------------------------------------------------------------------ */
+.backdrop {
+  position: fixed;
+  inset: -60px; /* Bleed outside viewport to eliminate white edges from blur */
+  background: url('Motion-Blurred Woman in Shadows.png') center center/cover no-repeat;
+  filter: blur(50px) brightness(0.85) saturate(1.15);
+  z-index: 1;
+  transform: scale(1.12);
+  will-change: transform;
+}
+
+/* Radial dark vignette overlay for focus */
+.backdrop-overlay {
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(
+    circle at center,
+    rgba(8, 11, 16, 0.15) 0%,
+    rgba(5, 7, 10, 0.52) 100%
+  );
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* ------------------------------------------------------------------------------
+   5. SHOWCASE CONTAINER
+   ------------------------------------------------------------------------------ */
+.showcase-container {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+/* ------------------------------------------------------------------------------
+   6. ULTRA-CLEAN SOCIAL MEDIA CARD (APPLE STYLE)
+   - 340px width x 540px height
+   - Generous 36px border radius
+   - Deep ambient drop shadow for realistic elevation
+   ------------------------------------------------------------------------------ */
+.social-card {
+  position: relative;
+  width: 340px;
+  height: 540px;
+  border-radius: 36px;
+  overflow: hidden;
+  border: none;
+  box-shadow: 0 40px 90px -18px rgba(0, 0, 0, 0.85);
+  user-select: none;
+  background-color: #0e1017;
+}
+
+/* Background Portrait Photo inside the Card */
+.card-image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 25%;
+  z-index: 1;
+}
+
+/* ------------------------------------------------------------------------------
+   7. TOP FLOATING BAR: Frosted Status Pill & Indicator
+   ------------------------------------------------------------------------------ */
+.card-top {
+  position: absolute;
+  top: 18px;
+  left: 18px;
+  right: 18px;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Frosted See-Through Status Pill (Glassmorphism) */
+.status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.18);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: none;
+  color: #ffffff;
+  font-size: 0.76rem;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Vertical Story Progress Indicator */
+.card-indicator {
+  width: 3.5px;
+  height: 44px;
+  background: rgba(255, 255, 255, 0.25);
+  border-radius: 9999px;
+  overflow: hidden;
+  position: relative;
+}
+
+.indicator-thumb {
+  width: 100%;
+  height: 45%;
+  background: #ffffff;
+  border-radius: 9999px;
+}
+
+/* ------------------------------------------------------------------------------
+   8. BOTTOM INFORMATION OVERLAY
+   Smooth upward dark gradient ensures all text is 100% legible over any photo
+   ------------------------------------------------------------------------------ */
+.card-bottom {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 5;
+  padding: 34px 20px 22px 20px;
+  background: linear-gradient(to top, 
+    rgba(4, 5, 8, 0.95) 0%, 
+    rgba(4, 5, 8, 0.65) 45%, 
+    rgba(4, 5, 8, 0.15) 80%, 
+    rgba(4, 5, 8, 0) 100%
+  );
+  display: flex;
+  flex-direction: column;
+}
+
+/* Location Tag (Secondary Metadata) */
+.location-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 0.75rem;
+  font-weight: 400;
+  letter-spacing: 0.01em;
+  margin-bottom: 3px;
+}
+
+.location-pin {
+  flex-shrink: 0;
+  opacity: 0.85;
+}
+
+/* Name & Verified Badge Row */
+.name-row {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin-bottom: 12px;
+}
+
+.user-name {
+  color: #ffffff;
+  font-size: 1.42rem;
+  font-weight: 500;
+  letter-spacing: -0.025em;
+  line-height: 1.15;
+}
+
+.verified-icon {
+  flex-shrink: 0;
+}
+
+/* ------------------------------------------------------------------------------
+   9. INTEREST CHIPS (Glassmorphism + Apple Color Emojis)
+   ------------------------------------------------------------------------------ */
+.tags-row {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 13px;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  border: none;
+  color: #ffffff;
+  font-size: 0.76rem;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
+}
+
+.chip-more {
+  background: rgba(255, 255, 255, 0.22);
+  color: #ffffff;
+  font-weight: 500;
+}
+
+/* Apple Color Emoji Alignment */
+.emoji {
+  width: 15px;
+  height: 15px;
+  object-fit: contain;
+  vertical-align: -2px;
+  display: inline-block;
+  flex-shrink: 0;
+}
+
+/* ------------------------------------------------------------------------------
+   10. THE MAGNETIC FOLLOW BUTTON
+   
+   CRITICAL PERFORMANCE RULE:
+   'will-change: transform' promotes the button element to a dedicated GPU
+   compositor layer. This ensures that rapid 60-120 FPS transform calculations
+   triggered by mouse movements in JavaScript run silky-smooth without
+   causing browser layout reflows or CPU paint cycles!
+   ------------------------------------------------------------------------------ */
+.follow-btn {
+  width: 100%;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border-radius: 9999px;
+  background: #000000;
+  color: #ffffff;
+  border: none;
+  font-family: inherit;
+  font-size: 0.9rem;
+  font-weight: 500;
+  letter-spacing: -0.015em;
+  cursor: pointer;
+  outline: none;
+  box-shadow: 0 10px 25px -4px rgba(0, 0, 0, 0.65);
+  transition: background 0.3s cubic-bezier(0.16, 1, 0.3, 1), 
+              color 0.3s cubic-bezier(0.16, 1, 0.3, 1), 
+              box-shadow 0.3s ease;
+  will-change: transform; /* Enables GPU Acceleration for 60fps tracking */
+}
+
+/* Hover State: Inverts to Crisp Apple White with Deep Obsidian Text */
+.follow-btn:hover {
+  background: #ffffff;
+  color: #000000;
+  box-shadow: 0 14px 35px -5px rgba(255, 255, 255, 0.35);
+}
+
+/* Active State: Toggled via JavaScript when following */
+.follow-btn.active {
+  background: #181a20;
+  color: #ffffff;
+}
+
+.follow-btn.active:hover {
+  background: #ffffff;
+  color: #000000;
+}
+
+/* Prevents mouse event jitter on child elements */
+.btn-text,
+.btn-icon {
+  pointer-events: none;
+  display: inline-flex;
+  align-items: center;
+}
